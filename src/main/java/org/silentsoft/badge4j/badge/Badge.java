@@ -223,6 +223,7 @@ abstract class Badge {
     }
 
     protected int preferredWidthOf(String content, Font font) {
+        // FIXME This will give different results depending on the jdk/jre.
         int width = FontDesignMetrics.getMetrics(font).stringWidth(content);
         return roundUpToOdd(width);
     }

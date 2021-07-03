@@ -19,6 +19,54 @@ public class BadgeTest {
     }
 
     @Test
+    public void simpleTest() {
+        for (Style style : Style.values()) {
+            String label = "hello".toLowerCase();
+            String message = "world".toLowerCase();
+            String logo = "data:image/svg+xml;base64,Dummy123+LOGO456+data789=".toLowerCase();
+            {
+                String svg = Badge.builder().style(style).label(label).message(message).logo(logo).build().toLowerCase();
+                Assertions.assertTrue(svg.contains(label));
+                Assertions.assertTrue(svg.contains(message));
+                Assertions.assertTrue(svg.contains(logo));
+            }
+            {
+                String[] links = new String[]{ "https://silentsoft.org" };
+                String svg = Badge.builder().style(style).label(label).message(message).logo(logo).links(links).build().toLowerCase();
+                Assertions.assertTrue(svg.contains(label));
+                Assertions.assertTrue(svg.contains(message));
+                Assertions.assertTrue(svg.contains(logo));
+                Assertions.assertTrue(svg.contains(links[0]));
+            }
+            {
+                String[] links = new String[]{ "https://left.silentsoft.org", "https://right.silentsoft.org" };
+                String svg = Badge.builder().style(style).label(label).message(message).logo(logo).links(links).build().toLowerCase();
+                Assertions.assertTrue(svg.contains(label));
+                Assertions.assertTrue(svg.contains(message));
+                Assertions.assertTrue(svg.contains(logo));
+                Assertions.assertTrue(svg.contains(links[0]));
+                Assertions.assertTrue(svg.contains(links[1]));
+            }
+            if (style != Style.Social) {
+                for (NamedColor namedColor : NamedColor.values()) {
+                    String svg = Badge.builder().style(style).label(label).message(message).logo(logo).color(namedColor.name()).labelColor(namedColor.name()).build().toLowerCase();
+                    Assertions.assertTrue(svg.contains(label));
+                    Assertions.assertTrue(svg.contains(message));
+                    Assertions.assertTrue(svg.contains(logo));
+                    Assertions.assertTrue(svg.contains(namedColor.getHex()));
+                }
+                for (NamedColorAlias namedColorAlias : NamedColorAlias.values()) {
+                    String svg = Badge.builder().style(style).label(label).message(message).logo(logo).color(namedColorAlias.name()).labelColor(namedColorAlias.name()).build().toLowerCase();
+                    Assertions.assertTrue(svg.contains(label));
+                    Assertions.assertTrue(svg.contains(message));
+                    Assertions.assertTrue(svg.contains(logo));
+                    Assertions.assertTrue(svg.contains(namedColorAlias.getHex()));
+                }
+            }
+        }
+    }
+
+    //@Test
     public void idempotentTest() throws IOException {
         String logo = "data:image/svg+xml;base64,Dummy123+LOGO456+data789=";
         for (Style style : Style.values()) {
