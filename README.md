@@ -1,6 +1,6 @@
 # Badge4J
 
-![release](https://img.shields.io/badge/release-v1.0.0-blue.svg)
+![Maven Central](https://img.shields.io/maven-central/v/org.silentsoft/badge4j)
 
 `Badge4J` is a Java implementation of the [badge-maker](https://www.npmjs.com/package/badge-maker) JavaScript library and is inspired by [shields.io](https://shields.io).
 
