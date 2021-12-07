@@ -1,7 +1,6 @@
 package org.silentsoft.badge4j.badge;
 
 import org.silentsoft.badge4j.Brightness;
-import sun.font.FontDesignMetrics;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -224,7 +223,7 @@ abstract class Badge {
 
     protected int preferredWidthOf(String content, Font font) {
         // FIXME This will give different results depending on the jdk/jre.
-        int width = FontDesignMetrics.getMetrics(font).stringWidth(content);
+        int width = Toolkit.getDefaultToolkit().getFontMetrics(font).stringWidth(content);
         return roundUpToOdd(width);
     }
 
