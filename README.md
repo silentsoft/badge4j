@@ -77,7 +77,7 @@ Badge.builder()
 <dependency>
     <groupId>org.silentsoft</groupId>
     <artifactId>badge4j</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 

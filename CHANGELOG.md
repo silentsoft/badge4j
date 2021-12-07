@@ -1,3 +1,8 @@
+# 1.1.0 (7 Dec 2021)
+
+## Enhancements
+- Supports Java 9 and above.
+
 # 1.0.0 (3 Jul 2021)
 
 ## Usage
