@@ -1,7 +1,7 @@
 # Badge4J
 
-![Maven Central](https://img.shields.io/maven-central/v/org.silentsoft/badge4j)
-[![Build Status](https://travis-ci.com/silentsoft/badge4j.svg?branch=main)](https://travis-ci.com/silentsoft/badge4j)
+[![Maven Central](https://img.shields.io/maven-central/v/org.silentsoft/badge4j)](https://search.maven.org/artifact/org.silentsoft/badge4j)
+[![Build Status](https://app.travis-ci.com/silentsoft/badge4j.svg?branch=main)](https://app.travis-ci.com/silentsoft/badge4j)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=silentsoft_badge4j&metric=alert_status)](https://sonarcloud.io/dashboard?id=silentsoft_badge4j)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=silentsoft_badge4j&metric=coverage)](https://sonarcloud.io/dashboard?id=silentsoft_badge4j)
 [![Hits](https://hits.sh/github.com/silentsoft/badge4j.svg)](https://hits.sh)
