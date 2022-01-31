@@ -16,12 +16,20 @@ public class BadgeTest {
     @Test
     public void nullTest() {
         Assertions.assertDoesNotThrow(() -> {
-            Badge.builder().style(null).label(null).message("message").color(null).labelColor(null).links(null).build();
+            Badge.builder().style(null).label(null).message("message").logo(null).color(null).labelColor(null).links(null).build();
         });
 
         Assertions.assertThrows(NullPointerException.class, () -> {
-            Badge.builder().style(null).label(null).message(null).color(null).labelColor(null).links(null).build();
+            Badge.builder().style(null).label(null).message(null).logo(null).color(null).labelColor(null).links(null).build();
         });
+    }
+
+    @Test
+    public void logoTest() {
+        Assertions.assertEquals(Badge.builder().message("message").logo(null).build(), Badge.builder().message("message").logo("").build());
+        Assertions.assertEquals(Badge.builder().message("message").logo(" ").build(), Badge.builder().message("message").logo(" ").build());
+        Assertions.assertFalse(Badge.builder().message("message").logo(" ").build().contains("data:image/svg+xml;base64,"));
+        Assertions.assertTrue(Badge.builder().message("message").logo("simpleicons").build().contains("data:image/svg+xml;base64,"));
     }
 
     @Test
