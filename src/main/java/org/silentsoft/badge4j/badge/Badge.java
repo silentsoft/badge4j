@@ -1,9 +1,13 @@
 package org.silentsoft.badge4j.badge;
 
 import org.silentsoft.badge4j.Brightness;
+import org.silentsoft.simpleicons.Icon;
+import org.silentsoft.simpleicons.SimpleIcons;
 
 import java.awt.*;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
+import java.util.Base64;
 
 abstract class Badge {
 
@@ -140,19 +144,49 @@ abstract class Badge {
     }
     protected LogoData renderLogo(String logo, int badgeHeight, int horizPadding, int logoWidth/*, int logoPadding*/) {
         LogoData logoData = new LogoData();
+
+        boolean nothingToRender = false;
         if (logo != null && logo.length() > 0) {
             int logoHeight = 14;
             int y = (badgeHeight - logoHeight) / 2;
             int x = horizPadding;
             logoData.hasLogo = true;
             logoData.totalLogoWidth = logoWidth + getLogoPadding();
-            logoData.renderedLogo = String.format("<image x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" xlink:href=\"%s\"/>", x, y, logoWidth, logoHeight, escapeXml(logo));
+
+            String base64 = encodeLogoToBase64(logo);
+            if (base64 != null) {
+                logoData.renderedLogo = String.format("<image x=\"%d\" y=\"%d\" width=\"%d\" height=\"%d\" xlink:href=\"%s\"/>", x, y, logoWidth, logoHeight, base64);
+            } else {
+                nothingToRender = true;
+            }
         } else {
+            nothingToRender = true;
+        }
+
+        if (nothingToRender) {
             logoData.hasLogo = false;
             logoData.totalLogoWidth = 0;
             logoData.renderedLogo = "";
         }
+
         return logoData;
+    }
+
+    protected String encodeLogoToBase64(String logo) {
+        if (logo.startsWith("data:")) {
+            return escapeXml(logo);
+        } else {
+            Icon simpleIcon = SimpleIcons.get(logo);
+            if (simpleIcon != null && simpleIcon.getSvg() != null && simpleIcon.getSvg().length() > 0) {
+                String svg = simpleIcon.getSvg();
+                if (simpleIcon.getHex() != null && simpleIcon.getHex().length() > 0) {
+                    svg = svg.replace("<svg", String.format("<svg fill=\"%s\"", (simpleIcon.getHex().startsWith("#") ? simpleIcon.getHex() : "#".concat(simpleIcon.getHex()))));
+                }
+                return "data:image/svg+xml;base64,".concat(Base64.getEncoder().encodeToString(svg.getBytes(StandardCharsets.UTF_8)));
+            }
+        }
+
+        return null;
     }
 
     protected String renderLink(String link, int height, int textLength, int horizPadding, int leftMargin, String renderedText) {

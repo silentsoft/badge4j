@@ -70,7 +70,7 @@ public class ForTheBadge extends Badge {
     @Override
     protected String renderLogo() {
         if (hasLogo()) {
-            return String.format("<image x=\"%d\" y=\"%.1f\" width=\"%d\" height=\"%d\" xlink:href=\"%s\"/>", logoMinX, 0.5 * (BADGE_HEIGHT - LOGO_HEIGHT), super.logoWidth, LOGO_HEIGHT, escapeXml(super.logo));
+            return String.format("<image x=\"%d\" y=\"%.1f\" width=\"%d\" height=\"%d\" xlink:href=\"%s\"/>", logoMinX, 0.5 * (BADGE_HEIGHT - LOGO_HEIGHT), super.logoWidth, LOGO_HEIGHT, encodeLogoToBase64(super.logo));
         }
         return "";
     }

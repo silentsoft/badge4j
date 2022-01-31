@@ -2,8 +2,14 @@ package org.silentsoft.badge4j;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.silentsoft.simpleicons.Icon;
+import org.silentsoft.simpleicons.SimpleIcons;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class BadgeTest {
 
@@ -23,46 +29,68 @@ public class BadgeTest {
         for (Style style : Style.values()) {
             String label = "hello".toLowerCase();
             String message = "world".toLowerCase();
-            String logo = "data:image/svg+xml;base64,Dummy123+LOGO456+data789=".toLowerCase();
-            {
-                String svg = Badge.builder().style(style).label(label).message(message).logo(logo).build().toLowerCase();
-                Assertions.assertTrue(svg.contains(label));
-                Assertions.assertTrue(svg.contains(message));
-                Assertions.assertTrue(svg.contains(logo));
-            }
-            {
-                String[] links = new String[]{ "https://silentsoft.org" };
-                String svg = Badge.builder().style(style).label(label).message(message).logo(logo).links(links).build().toLowerCase();
-                Assertions.assertTrue(svg.contains(label));
-                Assertions.assertTrue(svg.contains(message));
-                Assertions.assertTrue(svg.contains(logo));
-                Assertions.assertTrue(svg.contains(links[0]));
-            }
-            {
-                String[] links = new String[]{ "https://left.silentsoft.org", "https://right.silentsoft.org" };
-                String svg = Badge.builder().style(style).label(label).message(message).logo(logo).links(links).build().toLowerCase();
-                Assertions.assertTrue(svg.contains(label));
-                Assertions.assertTrue(svg.contains(message));
-                Assertions.assertTrue(svg.contains(logo));
-                Assertions.assertTrue(svg.contains(links[0]));
-                Assertions.assertTrue(svg.contains(links[1]));
-            }
-            if (style != Style.Social) {
-                for (NamedColor namedColor : NamedColor.values()) {
-                    String svg = Badge.builder().style(style).label(label).message(message).logo(logo).color(namedColor.name()).labelColor(namedColor.name()).build().toLowerCase();
+
+            Function<String, String> buildLogo = (String logo) -> {
+                if (logo.startsWith("data:")) {
+                    return logo.toLowerCase();
+                }
+
+                Icon simpleIcon = SimpleIcons.get(logo);
+                if (simpleIcon != null && simpleIcon.getSvg() != null && simpleIcon.getSvg().length() > 0) {
+                    String svg = simpleIcon.getSvg();
+                    if (simpleIcon.getHex() != null && simpleIcon.getHex().length() > 0) {
+                        svg = svg.replace("<svg", String.format("<svg fill=\"%s\"", (simpleIcon.getHex().startsWith("#") ? simpleIcon.getHex() : "#".concat(simpleIcon.getHex()))));
+                    }
+                    return "data:image/svg+xml;base64,".concat(Base64.getEncoder().encodeToString(svg.getBytes(StandardCharsets.UTF_8))).toLowerCase();
+                }
+
+                return null;
+            };
+
+            Consumer<String> test = (logo) -> {
+                {
+                    String svg = Badge.builder().style(style).label(label).message(message).logo(logo).build().toLowerCase();
                     Assertions.assertTrue(svg.contains(label));
                     Assertions.assertTrue(svg.contains(message));
-                    Assertions.assertTrue(svg.contains(logo));
-                    Assertions.assertTrue(svg.contains(namedColor.getHex()));
+                    Assertions.assertTrue(svg.contains(buildLogo.apply(logo)));
                 }
-                for (NamedColorAlias namedColorAlias : NamedColorAlias.values()) {
-                    String svg = Badge.builder().style(style).label(label).message(message).logo(logo).color(namedColorAlias.name()).labelColor(namedColorAlias.name()).build().toLowerCase();
+                {
+                    String[] links = new String[]{ "https://silentsoft.org" };
+                    String svg = Badge.builder().style(style).label(label).message(message).logo(logo).links(links).build().toLowerCase();
                     Assertions.assertTrue(svg.contains(label));
                     Assertions.assertTrue(svg.contains(message));
-                    Assertions.assertTrue(svg.contains(logo));
-                    Assertions.assertTrue(svg.contains(namedColorAlias.getHex()));
+                    Assertions.assertTrue(svg.contains(buildLogo.apply(logo)));
+                    Assertions.assertTrue(svg.contains(links[0]));
                 }
-            }
+                {
+                    String[] links = new String[]{ "https://left.silentsoft.org", "https://right.silentsoft.org" };
+                    String svg = Badge.builder().style(style).label(label).message(message).logo(logo).links(links).build().toLowerCase();
+                    Assertions.assertTrue(svg.contains(label));
+                    Assertions.assertTrue(svg.contains(message));
+                    Assertions.assertTrue(svg.contains(buildLogo.apply(logo)));
+                    Assertions.assertTrue(svg.contains(links[0]));
+                    Assertions.assertTrue(svg.contains(links[1]));
+                }
+                if (style != Style.Social) {
+                    for (NamedColor namedColor : NamedColor.values()) {
+                        String svg = Badge.builder().style(style).label(label).message(message).logo(logo).color(namedColor.name()).labelColor(namedColor.name()).build().toLowerCase();
+                        Assertions.assertTrue(svg.contains(label));
+                        Assertions.assertTrue(svg.contains(message));
+                        Assertions.assertTrue(svg.contains(buildLogo.apply(logo)));
+                        Assertions.assertTrue(svg.contains(namedColor.getHex()));
+                    }
+                    for (NamedColorAlias namedColorAlias : NamedColorAlias.values()) {
+                        String svg = Badge.builder().style(style).label(label).message(message).logo(logo).color(namedColorAlias.name()).labelColor(namedColorAlias.name()).build().toLowerCase();
+                        Assertions.assertTrue(svg.contains(label));
+                        Assertions.assertTrue(svg.contains(message));
+                        Assertions.assertTrue(svg.contains(buildLogo.apply(logo)));
+                        Assertions.assertTrue(svg.contains(namedColorAlias.getHex()));
+                    }
+                }
+            };
+
+            test.accept("data:image/svg+xml;base64,Dummy123+LOGO456+data789=");
+            test.accept("simpleicons");
         }
     }
 

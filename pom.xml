@@ -172,6 +172,11 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
+            <groupId>org.silentsoft</groupId>
+            <artifactId>simpleicons4j</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
             <version>1.7.2</version>
