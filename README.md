@@ -6,7 +6,7 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=silentsoft_badge4j&metric=coverage)](https://sonarcloud.io/dashboard?id=silentsoft_badge4j)
 [![Hits](https://hits.sh/github.com/silentsoft/badge4j.svg)](https://hits.sh)
 
-`Badge4J` is a Java implementation of the [badge-maker](https://www.npmjs.com/package/badge-maker) JavaScript library and is inspired by [shields.io](https://shields.io).
+`Badge4J` is a Java implementation of the [badge-maker](https://www.npmjs.com/package/badge-maker) JavaScript library and is inspired by [shields.io](https://shields.io). This library also supports [simple-icons](https://simpleicons.org).
 
 ## Usage
 ![](src/main/javadoc/org/silentsoft/badge4j/doc-files/style-flat-label-hello-message-world.svg)
@@ -22,7 +22,7 @@ Badge.builder()
      .message(String)
      .color(String)
      .labelColor(String)
-     .logo(String) /* data:image/svg+xml;base64,.. */
+     .logo(String) /* simple-icons slug or data:image/svg+xml;base64,.. */
      .logoWidth(int)
      .links(String[])
      .build();
@@ -77,7 +77,7 @@ Badge.builder()
 <dependency>
     <groupId>org.silentsoft</groupId>
     <artifactId>badge4j</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 

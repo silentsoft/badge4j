@@ -1,3 +1,8 @@
+# 1.2.0 (1 Feb 2022)
+
+## New Features
+- Supports [simple-icons](https://simpleicons.org).
+
 # 1.1.0 (7 Dec 2021)
 
 ## Enhancements
