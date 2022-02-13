@@ -179,9 +179,24 @@ abstract class Badge {
             Icon simpleIcon = SimpleIcons.get(logo);
             if (simpleIcon != null && simpleIcon.getSvg() != null && simpleIcon.getSvg().length() > 0) {
                 String svg = simpleIcon.getSvg();
-                if (simpleIcon.getHex() != null && simpleIcon.getHex().length() > 0) {
-                    svg = svg.replace("<svg", String.format("<svg fill=\"%s\"", (simpleIcon.getHex().startsWith("#") ? simpleIcon.getHex() : "#".concat(simpleIcon.getHex()))));
+                String adjustedColor = null;
+                if (!(this instanceof SocialBadge) && Brightness.of(labelColor) <= brightnessThreshold) {
+                    adjustedColor = "whitesmoke";
                 }
+                if (simpleIcon.getHex() != null && simpleIcon.getHex().length() > 0) {
+                    String logoColor = (simpleIcon.getHex().startsWith("#") ? simpleIcon.getHex() : "#".concat(simpleIcon.getHex()));
+                    if (this instanceof SocialBadge && Brightness.of(logoColor) > brightnessThreshold) {
+                        adjustedColor = "#333";
+                    }
+
+                    if (adjustedColor == null) {
+                        adjustedColor = logoColor;
+                    }
+                }
+                if (adjustedColor != null) {
+                    svg = svg.replace("<svg", String.format("<svg fill=\"%s\"", adjustedColor));
+                }
+
                 return "data:image/svg+xml;base64,".concat(Base64.getEncoder().encodeToString(svg.getBytes(StandardCharsets.UTF_8)));
             }
         }
