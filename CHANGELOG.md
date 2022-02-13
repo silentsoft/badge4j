@@ -1,3 +1,8 @@
+# 1.5.1 (14 Feb 2022)
+
+## Enhancements
+- Minor logo color adjustments.
+
 # 1.5.0 (14 Feb 2022)
 
 ## Enhancements
