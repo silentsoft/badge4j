@@ -8,8 +8,8 @@ import org.silentsoft.simpleicons.SimpleIcons;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class BadgeTest {
 
@@ -34,33 +34,23 @@ public class BadgeTest {
 
     @Test
     public void simpleTest() {
-        final double brightnessThreshold = 0.69;
         for (Style style : Style.values()) {
-            BiFunction<String, String, String> buildLogo = (String logo, String labelColor) -> {
+            Function<String, String> buildLogo = (String logo) -> {
                 if (logo.startsWith("data:")) {
                     return logo.toLowerCase();
-                }
-
-                labelColor = labelColor.trim();
-                labelColor = (NamedColor.nameOf(labelColor) != null) ? NamedColor.nameOf(labelColor).getHex() : (NamedColorAlias.nameOf(labelColor) != null) ? NamedColorAlias.nameOf(labelColor).getHex() : labelColor;
-                if (labelColor.startsWith("#") == false && org.silentsoft.csscolor4j.NamedColor.nameOf(labelColor) == null) {
-                    labelColor = "#".concat(labelColor);
                 }
 
                 Icon simpleIcon = SimpleIcons.get(logo);
                 if (simpleIcon != null && simpleIcon.getSvg() != null && simpleIcon.getSvg().length() > 0) {
                     String svg = simpleIcon.getSvg();
                     String adjustedColor = null;
-                    if (style != Style.Social && Brightness.of(labelColor) <= brightnessThreshold) {
-                        adjustedColor = "whitesmoke";
-                    }
                     if (simpleIcon.getHex() != null && simpleIcon.getHex().length() > 0) {
                         String logoColor = (simpleIcon.getHex().startsWith("#") ? simpleIcon.getHex() : "#".concat(simpleIcon.getHex()));
-                        if (style == Style.Social && Brightness.of(logoColor) > brightnessThreshold) {
+                        if (style == Style.Social && Brightness.of(logoColor) >= 0.6) {
                             adjustedColor = "#333";
-                        }
-
-                        if (adjustedColor == null) {
+                        } else if (style != Style.Social && Brightness.of(logoColor) <= 0.4) {
+                            adjustedColor = "whitesmoke";
+                        } else {
                             adjustedColor = logoColor;
                         }
                     }
@@ -82,14 +72,14 @@ public class BadgeTest {
                     String svg = Badge.builder().style(style).label(label).message(message).labelColor(labelColor).logo(logo).build().toLowerCase();
                     Assertions.assertTrue(svg.contains(label));
                     Assertions.assertTrue(svg.contains(message));
-                    Assertions.assertTrue(svg.contains(buildLogo.apply(logo, labelColor)));
+                    Assertions.assertTrue(svg.contains(buildLogo.apply(logo)));
                 }
                 {
                     String[] links = new String[]{ "https://silentsoft.org" };
                     String svg = Badge.builder().style(style).label(label).message(message).labelColor(labelColor).logo(logo).links(links).build().toLowerCase();
                     Assertions.assertTrue(svg.contains(label));
                     Assertions.assertTrue(svg.contains(message));
-                    Assertions.assertTrue(svg.contains(buildLogo.apply(logo, labelColor)));
+                    Assertions.assertTrue(svg.contains(buildLogo.apply(logo)));
                     Assertions.assertTrue(svg.contains(links[0]));
                 }
                 {
@@ -97,7 +87,7 @@ public class BadgeTest {
                     String svg = Badge.builder().style(style).label(label).message(message).labelColor(labelColor).logo(logo).links(links).build().toLowerCase();
                     Assertions.assertTrue(svg.contains(label));
                     Assertions.assertTrue(svg.contains(message));
-                    Assertions.assertTrue(svg.contains(buildLogo.apply(logo, labelColor)));
+                    Assertions.assertTrue(svg.contains(buildLogo.apply(logo)));
                     Assertions.assertTrue(svg.contains(links[0]));
                     Assertions.assertTrue(svg.contains(links[1]));
                 }
@@ -106,14 +96,14 @@ public class BadgeTest {
                         String svg = Badge.builder().style(style).label(label).message(message).logo(logo).color(namedColor.name()).labelColor(namedColor.name()).build().toLowerCase();
                         Assertions.assertTrue(svg.contains(label));
                         Assertions.assertTrue(svg.contains(message));
-                        Assertions.assertTrue(svg.contains(buildLogo.apply(logo, namedColor.name())));
+                        Assertions.assertTrue(svg.contains(buildLogo.apply(logo)));
                         Assertions.assertTrue(svg.contains(namedColor.getHex()));
                     }
                     for (NamedColorAlias namedColorAlias : NamedColorAlias.values()) {
                         String svg = Badge.builder().style(style).label(label).message(message).logo(logo).color(namedColorAlias.name()).labelColor(namedColorAlias.name()).build().toLowerCase();
                         Assertions.assertTrue(svg.contains(label));
                         Assertions.assertTrue(svg.contains(message));
-                        Assertions.assertTrue(svg.contains(buildLogo.apply(logo, namedColorAlias.name())));
+                        Assertions.assertTrue(svg.contains(buildLogo.apply(logo)));
                         Assertions.assertTrue(svg.contains(namedColorAlias.getHex()));
                     }
                 }

@@ -180,16 +180,13 @@ abstract class Badge {
             if (simpleIcon != null && simpleIcon.getSvg() != null && simpleIcon.getSvg().length() > 0) {
                 String svg = simpleIcon.getSvg();
                 String adjustedColor = null;
-                if (!(this instanceof SocialBadge) && Brightness.of(labelColor) <= brightnessThreshold) {
-                    adjustedColor = "whitesmoke";
-                }
                 if (simpleIcon.getHex() != null && simpleIcon.getHex().length() > 0) {
                     String logoColor = (simpleIcon.getHex().startsWith("#") ? simpleIcon.getHex() : "#".concat(simpleIcon.getHex()));
-                    if (this instanceof SocialBadge && Brightness.of(logoColor) > brightnessThreshold) {
+                    if (this instanceof SocialBadge && Brightness.of(logoColor) >= 0.6) {
                         adjustedColor = "#333";
-                    }
-
-                    if (adjustedColor == null) {
+                    } else if (!(this instanceof SocialBadge) && Brightness.of(logoColor) <= 0.4) {
+                        adjustedColor = "whitesmoke";
+                    } else {
                         adjustedColor = logoColor;
                     }
                 }
