@@ -1,3 +1,8 @@
+# 1.5.0 (14 Feb 2022)
+
+## Enhancements
+- Adjust the logo color according to the background color.
+
 # 1.4.0 (13 Feb 2022)
 
 ## Dependency Updates
