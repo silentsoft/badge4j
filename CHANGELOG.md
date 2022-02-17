@@ -1,3 +1,8 @@
+# 1.5.2 (17 Feb 2022)
+
+## Bug Fixes
+- Fix incorrect hashtag(`#`) prefix.
+
 # 1.5.1 (14 Feb 2022)
 
 ## Enhancements
