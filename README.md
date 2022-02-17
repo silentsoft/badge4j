@@ -4,7 +4,7 @@
 [![Build Status](https://app.travis-ci.com/silentsoft/badge4j.svg?branch=main)](https://app.travis-ci.com/silentsoft/badge4j)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=silentsoft_badge4j&metric=alert_status)](https://sonarcloud.io/dashboard?id=silentsoft_badge4j)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=silentsoft_badge4j&metric=coverage)](https://sonarcloud.io/dashboard?id=silentsoft_badge4j)
-[![Hits](https://hits.sh/github.com/silentsoft/badge4j.svg)](https://hits.sh)
+[![Hits](https://hits.sh/github.com/silentsoft/badge4j.svg)](https://hits.sh/github.com/silentsoft/badge4j/)
 
 `Badge4J` is a Java implementation of the [badge-maker](https://www.npmjs.com/package/badge-maker) JavaScript library and is inspired by [shields.io](https://shields.io). This library also supports [simple-icons](https://simpleicons.org).
 
