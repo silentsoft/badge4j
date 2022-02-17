@@ -1,5 +1,7 @@
 package org.silentsoft.badge4j;
 
+import org.silentsoft.csscolor4j.Color;
+
 public class Badge {
 
     private BadgeBuilder badgeBuilder;
@@ -21,7 +23,7 @@ public class Badge {
             color = color.trim();
             color = (NamedColor.nameOf(color) != null) ? NamedColor.nameOf(color).getHex() : (NamedColorAlias.nameOf(color) != null) ? NamedColorAlias.nameOf(color).getHex() : color;
             if (color.startsWith("#") == false && org.silentsoft.csscolor4j.NamedColor.nameOf(color) == null) {
-                color = "#".concat(color);
+                color = Color.valueOf(color).getHex();
             }
         }
         String labelColor = (badgeBuilder.labelColor != null && badgeBuilder.labelColor.length() > 0) ? badgeBuilder.labelColor : "#555";
@@ -29,7 +31,7 @@ public class Badge {
             labelColor = labelColor.trim();
             labelColor = (NamedColor.nameOf(labelColor) != null) ? NamedColor.nameOf(labelColor).getHex() : (NamedColorAlias.nameOf(labelColor) != null) ? NamedColorAlias.nameOf(labelColor).getHex() : labelColor;
             if (labelColor.startsWith("#") == false && org.silentsoft.csscolor4j.NamedColor.nameOf(labelColor) == null) {
-                labelColor = "#".concat(labelColor);
+                labelColor = Color.valueOf(labelColor).getHex();
             }
         }
         String[] links = badgeBuilder.links;
