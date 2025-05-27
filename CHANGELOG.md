@@ -1,3 +1,8 @@
+# 1.12.0 (27 May 2025)
+
+## Dependency Updates
+- [csscolor4j v1.1.0](https://github.com/silentsoft/csscolor4j/releases/tag/v1.1.0)
+
 # 1.11.0 (28 Mar 2022)
 
 ## Dependency Updates
