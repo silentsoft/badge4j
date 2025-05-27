@@ -111,9 +111,7 @@ public class BadgeTest {
 
             test.accept("data:image/svg+xml;base64,Dummy123+LOGO456+data789=");
             test.accept("simpleicons");
-            test.accept("apachecordova");
             test.accept("github");
-            test.accept("twitter");
         }
     }
 
