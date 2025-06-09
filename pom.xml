@@ -172,7 +172,7 @@
         <dependency>
             <groupId>org.silentsoft</groupId>
             <artifactId>simpleicons4j</artifactId>
-            <version>15.0.0</version>
+            <version>15.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
