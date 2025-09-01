@@ -6,7 +6,7 @@
 
     <groupId>org.silentsoft</groupId>
     <artifactId>badge4j</artifactId>
-    <version>1.26.0</version>
+    <version>1.27.0</version>
 
     <name>Badge4J</name>
     <description>Badge4J is a Java implementation of the badge-maker JavaScript library and is inspired by shields.io.</description>
