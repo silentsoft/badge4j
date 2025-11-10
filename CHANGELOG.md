@@ -1,3 +1,8 @@
+# 1.35.0 (10 Nov 2025)
+
+## Dependency Updates
+- [simpleicons4j v15.20.0](https://github.com/silentsoft/simpleicons4j/releases/tag/v15.20.0)
+
 # 1.34.0 (03 Nov 2025)
 
 ## Dependency Updates
