@@ -1,3 +1,8 @@
+# 1.56.0 (20 Apr 2026)
+
+## Dependency Updates
+- [simpleicons4j v16.17.0](https://github.com/silentsoft/simpleicons4j/releases/tag/v16.17.0)
+
 # 1.55.0 (13 Apr 2026)
 
 ## Dependency Updates
